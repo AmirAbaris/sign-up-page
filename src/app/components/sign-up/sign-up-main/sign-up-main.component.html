@@ -1,24 +1,26 @@
 <div class="flex flex-col gap-y-20 h-screen w-full items-center justify-center">
     <p class="text-white">This is a simple sign-up page for Angular 18</p>
 
-    <form class="flex flex-col" (ngSubmit)="onSubmitHandler()">
+    @if (signUpForm) {
+    <form [formGroup]="signUpForm" (ngSubmit)="onSubmitHandler()" class="flex flex-col">
         <mat-form-field>
             <mat-label>Email</mat-label>
-            <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+            <input type="email" matInput formControlName="email" [errorStateMatcher]="matcher"
                 placeholder="Ex. pat@example.com">
-            <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+            <mat-error
+                *ngIf="signUpForm.get('email')?.hasError('email') && !signUpForm.get('email')?.hasError('required')">
                 Please enter a valid email address
             </mat-error>
-            <mat-error *ngIf="emailFormControl.hasError('required')">
+            <mat-error *ngIf="signUpForm.get('email')?.hasError('required')">
                 Email is <strong>required</strong>
             </mat-error>
         </mat-form-field>
 
-        <app-password-form [formControl]="passwordFormControl" name="password"></app-password-form>
+        <app-password-form formControlName="password"></app-password-form>
 
-        <button class="mt-12" mat-raised-button type="submit"
-            [disabled]="!emailFormControl.valid || !passwordFormControl.valid">
+        <button class="mt-12" mat-raised-button type="submit" [disabled]="signUpForm.invalid">
             Sign Up
         </button>
     </form>
+    }
 </div>

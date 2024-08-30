@@ -17,6 +17,18 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class SignUpMainComponent {
   //#region Properties
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFormControl = new FormControl('', [Validators.required]);
   matcher = new MyErrorStateMatcher();
+  //#endregion
+
+  //#region Handler methods
+  public onSubmitHandler(): void {
+    if (this.emailFormControl.valid && this.passwordFormControl.valid) {
+      // Handle form submission
+      console.log('Form Submitted');
+    } else {
+      console.log('Form is invalid');
+    }
+  }
   //#endregion
 }
